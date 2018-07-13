@@ -19,16 +19,26 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    std::string filename {argv[1]};
-    bpistats::PriceByDay priceByDay = bpistats::load(filename);
-    bpistats::BpiStats stats{priceByDay};
-
-    if (stats.numPoints() == 0) {
-        std::cout << "No data points found." << std::endl;
+    if (strcmp(argv[1], "--help") == 0) {
+        std::cout << "Usage: stats <filename>" << std::endl;
         return EXIT_SUCCESS;
     }
 
-    report(filename, stats);
+    try {
+        std::string filename {argv[1]};
+        bpistats::PriceByDay priceByDay = bpistats::load(filename);
+        bpistats::BpiStats stats{priceByDay};
 
+        if (stats.numPoints() == 0) {
+            std::cout << "No data points found." << std::endl;
+            return EXIT_SUCCESS;
+        }
+
+        report(filename, stats);
+    }
+    catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
+    
     return EXIT_SUCCESS;
 }

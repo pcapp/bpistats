@@ -73,6 +73,12 @@ namespace bpistats {
         }
     }
 
+    /**
+     * TODO
+     *   - Create a general loading abstraction.
+     *   - Create a JSON file loader and a CURL-based loader.
+     *   - Handle malformed JSON.
+     */
     PriceByDay load(const std::string& filename) {
         std::ifstream file(filename);
         std::stringstream buffer;
@@ -90,6 +96,8 @@ namespace bpistats {
                     priceByDay.emplace(*maybeDate, it.value());
                 }
             }
+        } else {
+            throw std::exception("Could not open the file.");
         }
 
         return priceByDay;
