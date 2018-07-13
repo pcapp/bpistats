@@ -97,7 +97,7 @@ namespace bpistats {
                 }
             }
         } else {
-            throw std::exception("Could not open the file.");
+            throw std::runtime_error("Could not open the file.");
         }
 
         return priceByDay;
